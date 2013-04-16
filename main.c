@@ -110,6 +110,10 @@ void editInputFiles()
 
     printf("Enter size of first array: ");
     size = inputNumericalData();
+    if (size < 1) {
+        printf("Incorrect array size value\n");
+        exit(1);
+    }
     array = (int *) malloc(++size * sizeof(int));
     printf("Enter the numbers for first array: ");
     array[0] = size;
@@ -122,6 +126,10 @@ void editInputFiles()
 
     printf("Enter size of second array: ");
     size = inputNumericalData();
+    if (size < 1) {
+        printf("Incorrect array size value\n");
+        exit(1);
+    }
     array = (int *) malloc(++size * sizeof(int));
     printf("Enter the numbers for second array: ");
     array[0] = size;
@@ -136,12 +144,16 @@ void editInputFiles()
 
 int inputNumericalData()
 {
-    char buffer[stringSize];
+    char buffer[stringSize], *bufferPointer;
     int num;
+    bufferPointer = buffer;
     do {
         fgets(buffer, stringSize, stdin);
-        num = atoi(buffer);
-        if (num <= 0) {
+        num = strtol(buffer, &bufferPointer, 10);
+        if (num == 0) {
+            if (*(--bufferPointer) == '0') {
+                break;
+            }
             printf("Incorrect value. Try again: ");
             continue;
         }
